@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>CI/CD TP</title>
+  </head>
+  <body>
+    <h1>Message du backend :</h1>
+    <p id="message">Chargement...</p>
+
+    <script>
+      const p = document.getElementById("message");
+
+      (async () => {
+        p.innerHTML = await getMessage();
+      })();
+
+      async function getMessage() {
+        try {
+          const response = await fetch("/home");
+          if (!response.ok) return "erreur d'accés au backend";
+          const data = await response.json();
+          return data.message;
+        } catch (e) {
+          console.log("erreur de fetch");
+          return "erreur de fetch";
+        }
+      }
+    </script>
+  </body>
+</html>
